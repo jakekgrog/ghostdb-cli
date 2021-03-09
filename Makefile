@@ -2,7 +2,7 @@ GO_CMD=go
 GO_BUILD=$(GO_CMD) build
 GO_CLEAN=$(GO_CMD) clean
 GO_GET=$(GO_CMD) get
-NAME=ghostdb
+NAME=gdb
 DIR=./cmd
 
 all: build
