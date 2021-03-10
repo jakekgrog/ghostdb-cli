@@ -11,6 +11,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	INSTALL_DIR = "C:\\Program Files (x86)\\GhostDB\\ghostdb.exe"
+)
+
 var NodesCmd = &cobra.Command {
 	Use:   "nodes [add|get]",
 	Short: "Interacts with ghostdb nodes",
@@ -66,12 +70,11 @@ func getNodes() {
 		if name == procName {
 			cmdline, _ := proc.Cmdline()
 			line := strings.Split(string(cmdline), " ")
-			if len(line) > 6 {
+
+			if len(line) > 8 {
+				name, http, raft = line[4], line[6], line[8]
+			} else if len(line) > 6 {
 				name, http, raft = line[2], line[4], line[6]
-			} else {
-				name = line[2]
-				http = ":7991"
-				raft = ":11000"
 			}
 			fmt.Println(format(fmt.Sprint(pid), name, http, raft))
 		}
@@ -100,9 +103,9 @@ func addNodes(name, http, raft, join string) {
 func createNode(ch chan<- Data, name, http, raft, join string) {
 	var cmd *exec.Cmd
 	if join == "" {
-		cmd = exec.Command("C:\\Program Files (x86)\\GhostDB\\ghostdb.exe", "-id", name, "-http", http, "-raft", raft, "./"+name, "&")
+		cmd = exec.Command(INSTALL_DIR, "-id", name, "-http", http, "-raft", raft, name, "&")
 	} else {
-		cmd = exec.Command("C:\\Program Files (x86)\\GhostDB\\ghostdb.exe", "-id", name, "-http", http, "-raft", raft, "-join", join, "./"+name, "&")
+		cmd = exec.Command(INSTALL_DIR, "-id", name, "-http", http, "-raft", raft, "-join", join, name, "&")
 	}
 	err := cmd.Start()
 	ch <- Data {
