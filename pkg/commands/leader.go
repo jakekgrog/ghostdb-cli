@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/jakekgrog/ghostdb-cli/pkg/structures"
@@ -16,7 +17,8 @@ var LeaderCmd = &cobra.Command {
 		if addr == "" {
 			fmt.Println("You must supply a value for:\n - The address of a known node in the cluster (e.g. 127.0.0.1:7991)")
 		} else {
-			getLeader(addr)
+			ldr := getLeader(addr)
+			fmt.Println(ldr)
 		}
 	},
 }
@@ -26,8 +28,10 @@ func init() {
 	LeaderCmd.Flags().StringP("addr", "a", "", "specify the address of a known node in a cluster (e.g 127.0.0.1:7991)")
 }
 
-func getLeader(addr string) {
+func getLeader(addr string) string {
 	data := structures.NewEmptyRequest()
 	response := makePostRequest(addr+"/getLeader", data)
-	fmt.Println(response.Message)
+	ldrAddrPort := response.Message
+	ldrAddr := strings.Split(ldrAddrPort, ":")[0]
+	return ldrAddr+":"+defaultPort
 }
