@@ -13,3 +13,11 @@ func NewEmptyCacheObject() CacheObject {
 		TTL: -1,
 	}
 }
+
+func NewKVCacheObject(key, value string) CacheObject {
+	return CacheObject {
+		Key: key,
+		Value: value,
+		TTL: -1,
+	}
+}

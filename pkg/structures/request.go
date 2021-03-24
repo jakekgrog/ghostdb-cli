@@ -9,3 +9,9 @@ func NewEmptyRequest() CacheRequest {
 		Gobj: NewEmptyCacheObject(),
 	}
 }
+
+func NewStoreRequest(key, value string) CacheRequest {
+	return CacheRequest{
+		Gobj: NewKVCacheObject(key, value),
+	}
+}

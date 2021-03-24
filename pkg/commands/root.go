@@ -13,6 +13,10 @@ import (
 	"github.com/jakekgrog/ghostdb-cli/pkg/structures"
 )
 
+var (
+	defaultPort = "7991"
+)
+
 var RootCmd = &cobra.Command {
 	Use:   "GhostDB",
 	Short: "GhostDB Command-line Interface",
