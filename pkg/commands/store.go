@@ -35,11 +35,11 @@ var StoreCmd = &cobra.Command {
 }
 
 func init() {
-	RootCmd.AddCommand(PutCmd)
-	PutCmd.Flags().StringP("key", "k", "", "specify the key for the item")
-	PutCmd.Flags().StringP("value", "v", "", "specify the value for the item")
-	PutCmd.Flags().StringP("addr", "a", "", "specify the address of a node in the cluster (e.g 127.0.0.1:7991)")
-	PutCmd.Flags().BoolP("leader", "l", false, "Allows user to specify the addr of any node and a background call will be made to find the leader")
+	RootCmd.AddCommand(StoreCmd)
+	StoreCmd.Flags().StringP("key", "k", "", "specify the key for the item")
+	StoreCmd.Flags().StringP("value", "v", "", "specify the value for the item")
+	StoreCmd.Flags().StringP("addr", "a", "", "specify the address of a node in the cluster (e.g 127.0.0.1:7991)")
+	StoreCmd.Flags().BoolP("leader", "l", false, "Allows user to specify the addr of any node and a background call will be made to find the leader")
 }
 
 func storeValue(cmd, key, value, addr string, ldr bool) {
